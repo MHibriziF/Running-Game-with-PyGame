@@ -107,33 +107,32 @@ class Coins(pygame.sprite.Sprite):
         self.coin_sound = pygame.mixer.Sound("audio/coins_sound.wav")
         self.coin_sound.set_volume(0.4)
         self.current_score = 0
-    
-    def update(self):
-            """Updates Movement"""
-            self.rect.x -= 15
-            self.destroy()
-            self.display_score()
 
+    def display_score(self):
+        """Displays score """
+        global current_score
+
+        score_surf = test_font.render(f'Score : {current_score}', False, (64, 64, 64))
+        score_rect = score_surf.get_rect(center = (400, 40))
+        screen.blit(score_surf, score_rect)
+        return current_score
+        
     def destroy(self):
         """Destroys coin object when out of screen"""
         if self.rect.x <= -100:
             self.kill() 
 
-    def display_score(self):
-        """Displays score and add score"""
+    def update(self):
+        """Updates coin movement and score"""
         global current_score
+        
+        self.rect.x -= 15
+        self.destroy()
 
-        # Add score if player gets coin
         if pygame.sprite.spritecollide(player.sprite, coins_group, False):
-            coins_group.empty()
+            self.kill()
             current_score += 1
             self.coin_sound.play()
-
-        # Shows score
-        score_surf = test_font.render(f'Score : {current_score}', False, (64, 64, 64))
-        score_rect = score_surf.get_rect(center = (400, 40))
-        screen.blit(score_surf, score_rect)
-        return current_score
 
 
 def display_start():
@@ -179,7 +178,6 @@ test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
 game_active = False
 start = False
 new_high_score = False
-start_time = 0
 current_score = 0
 previous_score = 0 
 high_score = 0
