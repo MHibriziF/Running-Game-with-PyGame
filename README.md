@@ -1,5 +1,5 @@
 # Running-Game-with-PyGame
-First time making a game using Pygame. Modified a few aspects of the game from the original tutorial video i followed. \n
+First time making a game using Pygame. Modified a few aspects of the game from the original tutorial video i followed.
 
 URL for the original game tutorial: https://www.youtube.com/watch?v=AY9MnQ4x3zk
 What I modified from the original game:
