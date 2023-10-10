@@ -110,8 +110,6 @@ class Coins(pygame.sprite.Sprite):
 
     def display_score(self):
         """Displays score """
-        global current_score
-
         score_surf = test_font.render(f'Score : {current_score}', False, (64, 64, 64))
         score_rect = score_surf.get_rect(center = (400, 40))
         screen.blit(score_surf, score_rect)
