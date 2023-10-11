@@ -81,9 +81,10 @@ class Obstacle(pygame.sprite.Sprite):
         self.image = self.frames[int(self.animation_index)]
 
     def update(self):
+        global objects_speed
         """Upadates Obstacles movement"""
-        self.obstacle_animation()
-        self.rect.x -= 17
+        self.obstacle_animation()  
+        self.rect.x -= (objects_speed + 5)
         self.destroy()
 
     def destroy(self):
@@ -122,12 +123,16 @@ class Coins(pygame.sprite.Sprite):
 
     def update(self):
         """Updates coin movement and score"""
-        global current_score
-        
-        self.rect.x -= 15
+        global objects_speed, current_score
+
+        self.rect.x -= (objects_speed + 3)
         self.destroy()
 
         if pygame.sprite.spritecollide(player.sprite, coins_group, False):
+            # Increases objects speed
+            if current_score % 5 == 0 and objects_speed < 25:
+                objects_speed += 1
+
             self.kill()
             current_score += 1
             self.coin_sound.play()
@@ -147,11 +152,10 @@ def display_start():
     screen.blit(welcome_surf, welcome_rect)
     screen.blit(message_surf, message_rect)
 
-
 def collision_obstacle():
     """Detects collision with an Obstacle 
     If detects a collision with an obstacle, will return True, else False"""
-    global current_score
+    global current_score, objects_speed
     death_sound = pygame.mixer.Sound("audio/death_sound.wav")
     death_sound.set_volume(0.3)
 
@@ -159,6 +163,7 @@ def collision_obstacle():
         obstacle_group.empty()
         coins_group.empty()
         current_score = 0
+        objects_speed = 7
         death_sound.play()
         return False
     else:
@@ -179,6 +184,7 @@ new_high_score = False
 current_score = 0
 previous_score = 0 
 high_score = 0
+objects_speed = 7
 
 # Set in-game backgrounds and menu objects
 sky_surf = pygame.image.load('graphics/Sky.png').convert_alpha()
