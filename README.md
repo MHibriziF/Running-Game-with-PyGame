@@ -7,6 +7,8 @@ What I modified from the original game:
 - Changed the scoring system.
 The original game from the tutorial uses time to score the game. I modified this and changed the scoring system to collecting coins. Each time a player successfully grabs a coin, one point is added to the player's score.
 
+- Increased Obstacle speed. I modified the game so that when the player's score reached a multiple of some number (in this case 5), the speed of the obstacle increases making the game more challenging as it goes on.
+  
 - Added high score feature.
 Tracks the player score from each play and stores the highest value as their high score. Also tells the player when a new high score is reached
 
