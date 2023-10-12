@@ -130,7 +130,7 @@ class Coins(pygame.sprite.Sprite):
 
         if pygame.sprite.spritecollide(player.sprite, coins_group, False):
             # Increases objects speed
-            if current_score % 5 == 0 and objects_speed < 25:
+            if current_score % 5 == 4 and objects_speed < 25:
                 objects_speed += 1
 
             self.kill()
