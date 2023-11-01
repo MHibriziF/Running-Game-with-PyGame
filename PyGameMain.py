@@ -108,13 +108,6 @@ class Coins(pygame.sprite.Sprite):
         self.coin_sound = pygame.mixer.Sound("audio/coins_sound.wav")
         self.coin_sound.set_volume(0.4)
         self.current_score = 0
-
-    def display_score(self):
-        """Displays score """
-        score_surf = test_font.render(f'Score : {current_score}', False, (64, 64, 64))
-        score_rect = score_surf.get_rect(center = (400, 40))
-        screen.blit(score_surf, score_rect)
-        return current_score
         
     def destroy(self):
         """Destroys coin object when out of screen"""
@@ -162,13 +155,17 @@ def collision_obstacle():
     if pygame.sprite.spritecollide(player.sprite, obstacle_group, False):
         obstacle_group.empty()
         coins_group.empty()
-        current_score = 0
         objects_speed = 7
         death_sound.play()
         return False
     else:
         return True
     
+def display_score():
+    """Displays score"""
+    score_surf = test_font.render(f'Score : {current_score}', False, (64, 64, 64))
+    score_rect = score_surf.get_rect(center = (400, 40))
+    screen.blit(score_surf, score_rect)
 
 # Initializes variable
 pygame.init()
@@ -182,7 +179,6 @@ game_active = False
 start = False
 new_high_score = False
 current_score = 0
-previous_score = 0 
 high_score = 0
 objects_speed = 7
 
@@ -232,6 +228,7 @@ while True:
 
         else:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                current_score = 0
                 game_active = True
 
         if not start:
@@ -242,7 +239,7 @@ while True:
         new_high_score = False
         screen.blit(sky_surf,(0, 0))
         screen.blit(ground_surf,(0, 300))
-        previous_score = Coins().display_score() 
+        display_score() 
     
         # Player
         player.draw(screen)
@@ -261,8 +258,8 @@ while True:
     # Restart display
     elif not game_active and start:
         #Checks new high score
-        if previous_score > high_score:
-            high_score = previous_score
+        if current_score > high_score:
+            high_score = current_score
             new_high_score = True
             new_high_score_surf = test_font.render('(New)', False, (45, 196, 141))
             new_high_score_rect = new_high_score_surf.get_rect(center = (560, 340)) 
@@ -275,7 +272,7 @@ while True:
         game_over_rect = game_over_surf.get_rect(center = (400, 50))
         restart_surf = test_font.render('Press space to restart', False, (209, 44, 107))
         restart_rect = restart_surf.get_rect(center = (400, 377))
-        score_surf = test_font.render(f'Your Score: {previous_score}', False, (64, 64, 64))
+        score_surf = test_font.render(f'Your Score: {current_score}', False, (64, 64, 64))
         score_rect = score_surf.get_rect(center = (400, 300))
 
         screen.fill((94, 129, 162))
